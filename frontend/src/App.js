@@ -1,5 +1,5 @@
 import LtImage from './components/Image/Image';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Modal } from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
 import { useEffect, useState } from 'react';
 import { BsFillPencilFill, BsFillTrashFill } from 'react-icons/bs';
@@ -8,13 +8,29 @@ import axios from 'axios';
 import 'styled-components';
 
 export default function App() {
+    const [show, setShow] = useState(false);
+    const [id, setId] = useState();
     const [business, setBusiness] = useState([]);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const showData = () => {
         axios
             .get('/api/business')
             .then((res) => {
                 setBusiness(res.data);
+            })
+            .catch((err) => console.log(err));
+    };
+
+    const remove = (id) => {
+        const URL = '/api/business/' + id;
+        axios
+            .delete(URL)
+            .then((res) => {
+                showData();
+                handleClose();
             })
             .catch((err) => console.log(err));
     };
@@ -29,8 +45,12 @@ export default function App() {
         {
             name: 'Actions',
             selector: (row) => [
-                <Link to={'/edit/' + row.id} key={'edit' + row.id} id={row.id}>
-                    <Button variant="warning" className="fw-bold">
+                <Link to={'/edit/' + row.id} key={'edit' + row.id}>
+                    <Button
+                        variant="warning"
+                        className="fw-bold"
+                        value={row.id}
+                    >
                         <BsFillPencilFill></BsFillPencilFill>
                     </Button>
                 </Link>,
@@ -41,6 +61,11 @@ export default function App() {
                     variant="danger"
                     className="fw-bold"
                     key={'delete' + row.id}
+                    value={row.id}
+                    onClick={() => {
+                        handleShow();
+                        setId(row.id);
+                    }}
                 >
                     <BsFillTrashFill></BsFillTrashFill>
                 </Button>,
@@ -66,6 +91,30 @@ export default function App() {
                     pagination
                 ></DataTable>
             </div>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Body>
+                    Are you sure you want to delete this business?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        className="fw-bold"
+                        variant="secondary"
+                        onClick={handleClose}
+                    >
+                        Close
+                    </Button>
+                    <Button
+                        className="fw-bold"
+                        variant="warning"
+                        onClick={() => {
+                            remove(id);
+                        }}
+                    >
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 }

@@ -160,7 +160,7 @@ export default function Update() {
                             Update
                         </Button>
                         <Button
-                            type="submit"
+                            type="button"
                             variant="dark"
                             className="fw-bold w-50"
                             onClick={() => navigate('/')}
@@ -168,7 +168,6 @@ export default function Update() {
                             Cancel
                         </Button>
                     </div>
-                    <div clasName="pb-5"></div>
                 </div>
             </Form>
         </Container>
