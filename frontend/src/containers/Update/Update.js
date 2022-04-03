@@ -144,7 +144,6 @@ export default function Update() {
                         value={phone}
                         onChange={changePhone}
                         required
-                        pattern="[1-9]{1}[0-9]{9}"
                     />
                     <Form.Control.Feedback type="invalid">
                         Please insert a phone.
