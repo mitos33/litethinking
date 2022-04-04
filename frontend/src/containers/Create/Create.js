@@ -5,7 +5,7 @@ import LtImage from '../../components/Image/Image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
-export default function Create() {
+export default function Create(props) {
     const navigate = useNavigate();
 
     //State variables
@@ -45,8 +45,9 @@ export default function Create() {
     };
 
     const create = () => {
+        const URL = '/api/business/';
         axios
-            .post('/api/business/', {
+            .post(props.value + URL, {
                 name: name,
                 address: address,
                 nit: nit,

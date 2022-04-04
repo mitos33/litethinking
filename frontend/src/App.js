@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import 'styled-components';
 
-export default function App() {
+export default function App(props) {
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
     const [business, setBusiness] = useState([]);
@@ -17,7 +17,7 @@ export default function App() {
 
     const showData = () => {
         axios
-            .get('/api/business')
+            .get(props.value + '/api/business')
             .then((res) => {
                 setBusiness(res.data);
             })
@@ -25,9 +25,8 @@ export default function App() {
     };
 
     const remove = (id) => {
-        const URL = '/api/business/' + id;
         axios
-            .delete(URL)
+            .delete(props.BASE_URL + '/api/business/' + id)
             .then((res) => {
                 showData();
                 handleClose();

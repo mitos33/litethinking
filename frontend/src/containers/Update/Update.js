@@ -5,7 +5,7 @@ import LtImage from '../../components/Image/Image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
-export default function Update() {
+export default function Update(props) {
     //Se obtiene el parametro id de la URL
     const { id } = useParams();
 
@@ -54,7 +54,7 @@ export default function Update() {
     const get = () => {
         const URL = '/api/business/' + id + '/';
         axios
-            .get(URL, {})
+            .get(props.value + URL, {})
             .then((res) => {
                 setBusinessId(id);
                 setName(res.data.name);
@@ -72,7 +72,7 @@ export default function Update() {
         const URL = '/api/business/' + businessId + '/';
 
         axios
-            .patch(URL, {
+            .patch(props.value + URL, {
                 name: name,
                 address: address,
                 nit: nit,
