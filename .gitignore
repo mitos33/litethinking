@@ -39,5 +39,6 @@ backend/tests/coverage_html/
 backend/tests/.coverage
 backend/build/
 backend/tests/report/
+backend/static/
 
 /venv
