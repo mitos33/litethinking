@@ -26,7 +26,7 @@ export default function App(props) {
 
     const remove = (id) => {
         axios
-            .delete(props.BASE_URL + '/api/business/' + id)
+            .delete(props.value + '/api/business/' + id)
             .then((res) => {
                 showData();
                 handleClose();
